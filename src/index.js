@@ -10,7 +10,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import requireAuth from './components/hoc/require_auth';
 import noRequireAuth from './components/hoc/no_require_auth';
 import SignIn from './components/SignIn';
-import Upload from './components/Upload';
+import Upload from './components/Upload.jsx';
 import HomePage from './components/HomePage';
 import SignOut from './components/SignOut';
 import Details from './components/Details'
@@ -22,9 +22,10 @@ import Header from './components/NavBar';
 //Actions and Reducers
 import { AUTHENTICATED } from './actions';
 import reducers from './reducers';
+//import UploadContainer from "./containers/uploadStore"
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
-const store = createStoreWithMiddleware(reducers,
+const store = createStoreWithMiddleware(reducers,//UploadContainer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
 //Check cookies to see if user is already authenticated
@@ -37,7 +38,7 @@ if(usercode) {
 }
 
 
-
+console.log("STATE: ", this.state)
 ReactDOM.render(
   <Provider store={store}>
    <Router>

@@ -106,6 +106,7 @@ class Details extends Component {
   }
 
     render() {
+    //console.log("STATE :", this.state)
         return (
           <div>
             <div
