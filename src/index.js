@@ -44,7 +44,7 @@ ReactDOM.render(
      <div>
        <Header/>
        <Route exact path="/" component={HomePage} />
-       <Route path="/signin" component={noRequireAuth(SignIn)} />
+       <Route  path="/signin" component={noRequireAuth(SignIn)} />
        <Route path="/details" component={requireAuth(Details)} />
        <Route path="/signout" component={requireAuth(SignOut)} />
        <Route path="/upload" component={requireAuth(Upload)} />
