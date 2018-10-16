@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './css/Upload.css'
 import {connect} from "react-redux";
+import token from "./token.jsx";
 
 //import { connect } from 'react-redux';
 //import octokit from "@octokit/rest";
@@ -9,8 +10,7 @@ const octokit = require('@octokit/rest')({
 })
 
 
-var token =
-    "d63784c455f9443fde3150bdf3f199e930d31e91"
+
 
 // octokit.authenticate({
 //     type: 'basic',
@@ -20,8 +20,8 @@ var token =
 
 
 
-
-var theresult;
+/*Todo: popup to say complete
+     look into storing info as a cookie, and then accessing */
 
 
 
@@ -64,7 +64,8 @@ class Upload extends Component {
      }
 
     render(){
-    console.log("state",this.props)
+    console.log("props",this.props)
+    console.log("token",{token})
     return(
       <div className="upload">
       <div>
