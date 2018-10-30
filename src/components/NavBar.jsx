@@ -15,6 +15,7 @@ class Header extends Component {
           <Nav>
             <NavItem eventKey={1} href="details">Details</NavItem>
             <NavItem eventKey={2} href="upload">Upload</NavItem>
+            <NavItem eventKey={2} href="issues">Issues</NavItem>
           </Nav>
           <Nav pullRight>
             <NavItem eventKey={3} href="signout">Sign Out</NavItem>
