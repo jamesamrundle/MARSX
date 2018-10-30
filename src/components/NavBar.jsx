@@ -21,8 +21,6 @@ class Header extends Component {
             <NavItem eventKey={3} href="signout">Sign Out</NavItem>
           </Nav>
         </div>
-
-
       );
     }
     return (
@@ -31,7 +29,8 @@ class Header extends Component {
       </Nav>
     );
   }
-  render(){
+
+  render() {
     return (
       <Navbar fixedTop inverse className="nav">
         <Navbar.Header>
