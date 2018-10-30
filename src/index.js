@@ -15,8 +15,7 @@ import HomePage from './components/HomePage';
 import SignOut from './components/SignOut';
 import Details from './components/Details'
 import Header from './components/NavBar';
-import Issues from "./components/Issues"
-import MapBuilder from "./components/MapBuilder"
+import Issues from "./components/Issues";
 
 //CSS
 //import 'bootstrap/dist/css/bootstrap.css';
@@ -51,7 +50,6 @@ ReactDOM.render(
        <Route path="/signout" component={requireAuth(SignOut)} />
        <Route path="/upload" component={requireAuth(Upload)} />
        <Route path="/issues" component={requireAuth(Issues)} />
-       <Route path="/builder" component={requireAuth(MapBuilder)} />
 
      </div>
    </Router>
