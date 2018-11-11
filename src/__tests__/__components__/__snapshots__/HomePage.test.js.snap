@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<HomePage /> should render correctly 1`] = `
+<div
+  className="home"
+>
+  <div
+    className="header"
+  >
+    MARS
+    <div
+      className="subtitle"
+    >
+      Middleware for Assisting the Registration of Samples
+    </div>
+  </div>
+</div>
+`;

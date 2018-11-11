@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './css/details.css'
-import { Button, ButtonToolbar } from 'react-bootstrap'
+import Loader from 'react-loader-spinner';
+import { Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap'
 
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
@@ -25,30 +26,41 @@ class Details extends Component {
       sortingFlag: 0,
       sortSampleNamesFlag: false,
       usercode: localStorage.getItem('usercode')
-      }
-
-    /*  this.handleClickNext = this.handleClickNext.bind(this)
-      this.handleClickPrev = this.handleClickPrev.bind(this)
-      this.changeLimit = this.changeLimit.bind(this)*/
-      this.sendRequest = this.sendRequest.bind(this)
-    //  this.sampleSort = this.sampleSort.bind(this)
-    this.onButtonClick = this.onButtonClick.bind(this)
     }
 
-    componentDidMount(){
+    this.handleClickNext = this.handleClickNext.bind(this)
+    this.handleClickPrev = this.handleClickPrev.bind(this)
+      //this.changeLimit = this.changeLimit.bind(this)*/
+    this.sendRequest = this.sendRequest.bind(this)
+    this.handleOpenProfile = this.handleOpenProfile.bind(this)
+  }
+
+  componentDidMount() {
     this.sendRequest(0)
   }
 
-  onButtonClick(e){
-      const length = this.gridApi.getSelectedNodes().length
-      console.log(length)
-      for (var i = 0; i < length; i++){
-        console.log(i)
-        let igsn = this.gridApi.getSelectedNodes()[i].data.IGSN
-        console.log(igsn)
-        window.open(`https://sesardev.geosamples.org/sample/igsn/${igsn}`)
-      }
+  handleClickNext(e){
+    e.preventDefault()
+    this.sendRequest(1)
+  };
+
+  handleClickPrev(e){
+    e.preventDefault()
+    if(this.state.page_no !== 1) {
+      this.sendRequest(-1)
+    }
+  };
+  handleOpenProfile(e){
+    const length = this.gridApi.getSelectedNodes().length
+    console.log(length)
+    for (var i = 0; i < length; i++){
+      console.log(i)
+      let igsn = this.gridApi.getSelectedNodes()[i].data.IGSN
+      console.log(igsn)
+      window.open(`https://sesardev.geosamples.org/sample/igsn/${igsn}`)
+    }
   }
+
   sendRequest(num){
 
     //Reset state everytime new information needs to be put into state
@@ -92,52 +104,74 @@ class Details extends Component {
         })
       });
     })
-
     //Throw an error if the GET request don't come through
     .catch(error => {
       console.log(error)
-      /*if (error.response.status == 404){
+        if (error.response.status == 404){
         console.log('error 404')
         var pageBeforeError = this.state.page_no -1
         this.setState({page_no: (pageBeforeError)})
         this.sendRequest(0)
-      }*/
+      }
     });
   }
 
-    render() {
-        return (
-          <div>
-            <div
-              className="ag-theme-balham"
-              style={{
-  	           height: '600px',
-  	           width: '90%' ,
-               margin: 'auto'}}
-  		           >
-                   <ButtonToolbar className="openProfile">
-                     <Button
-                       bsStyle="primary"
-                       bsSize="large"
+  render() {
+    if(this.state.loading === true) {
+      return (
+        <div className="outerDiv">
+          <Loader
+            type="Puff"
+            color="#00BFFF"
+            height="200"
+            width="200"/>
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          <div
+            className="ag-theme-balham"
+            style={{
+              height: '600px',
+              width: '90%' ,
+              margin: 'auto'
+            }}
+          >
+            <ButtonToolbar className="openProfile">
+              <Button
+                bsStyle="primary"
+                bsSize="large"
+                onClick={this.handleOpenProfile}>
+                Open Sample Page
+              </Button>
+            </ButtonToolbar>
 
-                       onClick={this.onButtonClick}>
-                       Open Sample Page
-                     </Button>
-                   </ButtonToolbar>
+            <AgGridReact
+              onGridReady={ params => this.gridApi = params.api }
+              rowSelection="multiple"
+              enableSorting={true}
+              enableFilter={true}
+              columnDefs={this.state.columnDefs}
+              rowData={this.state.rowData}>
+            </AgGridReact>
 
-                    <AgGridReact
-                          onGridReady={ params => this.gridApi = params.api }
-                          rowSelection="multiple"
-                          enableSorting={true}
-                          enableFilter={true}
-                          columnDefs={this.state.columnDefs}
-                          rowData={this.state.rowData}>
-                    </AgGridReact>
+            <ButtonToolbar>
+              <ButtonGroup>
+                <Button onClick={this.handleClickPrev}>Previous</Button>
+                <Button onClick={this.handleClickNext}>  Next  </Button>
+              </ButtonGroup>
+            </ButtonToolbar>
+
+            <div>
+              Page {this.state.page_no}
             </div>
-          </div>
 
-            );
+          </div>
+        </div>
+      );
     }
+  }
 }
 
 export default Details;
